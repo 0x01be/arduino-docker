@@ -1,6 +1,6 @@
-FROM 0x01be/arduino:build as build
+FROM 0x01be/arduino:build-arm32v6 as build
 
-FROM 0x01be/xpra
+FROM 0x01be/xpra:arm32v6
 
 COPY --from=build /opt/arduino/ /opt/arduino/
 
