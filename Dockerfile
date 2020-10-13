@@ -15,4 +15,7 @@ RUN git clone --depth 1 --branch ${ARDUINO_REVISION} https://github.com/arduino/
 
 WORKDIR /arduino/build
 RUN ant dist -Dplatform=linux64 -Dversion=1.8.14
+
+WORKDIR /opt/
+RUN tar xvf /arduino/build/linux/arduino-1.8.14-linux64.tar.xz && mv arduino-1.8.14 arduino
     
