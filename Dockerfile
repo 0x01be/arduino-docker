@@ -13,9 +13,12 @@ RUN apk add --no-cache --virtual arduino-build-dependencies \
 ENV ARDUINO_REVISION master
 RUN git clone --depth 1 --branch ${ARDUINO_REVISION} https://github.com/arduino/Arduino.git /arduino
 
+ENV VERSION "1.8.14"
+ENV PLATFORM "linux64"
+
 WORKDIR /arduino/build
-RUN ant dist -Dplatform=linux64 -Dversion=1.8.14
+RUN ant dist -Dplatform=${PLATFORM} -Dversion=${VERSION}
 
 WORKDIR /opt/
-RUN tar xvf /arduino/build/linux/arduino-1.8.14-linux64.tar.xz && mv arduino-1.8.14 arduino
+RUN tar xvf /arduino/build/linux/arduino-${VERSION}-${PLATFORM}.tar.xz && mv arduino-${VERSION} arduino
     
