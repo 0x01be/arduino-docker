@@ -1,21 +1,20 @@
-FROM alpine as build
+FROM 0x01be/arduino:build as build
 
-RUN apk add --no-cache --virtual arduino-build-dependencies \
-    git \
-    build-base \
-    perl \
+FROM 0x01be/xpra
+
+COPY --from=build /opt/arduino/ /opt/arduino/
+
+USER root
+RUN apk add --no-cache --virtual arduino-runtime-dependencies \
     openjdk8 \
-    apache-ant \
+    bash \
     unzip \
     tar \
     xz
 
-ENV ARDUINO_REVISION master
-RUN git clone --depth 1 --branch ${ARDUINO_REVISION} https://github.com/arduino/Arduino.git /arduino
+USER xpra
 
-WORKDIR /arduino/build
-RUN ant dist -Dplatform=linux64 -Dversion=1.8.14
+ENV PATH ${PATH}:/opt/arduino/
 
-WORKDIR /opt/
-RUN tar xvf /arduino/build/linux/arduino-1.8.14-linux64.tar.xz && mv arduino-1.8.14 arduino
-    
+ENV COMMAND arduino
+
