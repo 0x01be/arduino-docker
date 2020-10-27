@@ -1,4 +1,4 @@
-FROM alpine as build
+FROM arm32v6/alpine:3.12.1 as build
 
 RUN apk add --no-cache --virtual arduino-build-dependencies \
     git \
